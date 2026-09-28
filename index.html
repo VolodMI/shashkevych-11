@@ -3,346 +3,234 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#08090c">
-    <meta name="description" content="Інтерактивний спецпроєкт: 215 років Маркіяну Шашкевичу та 140 років СЗШ №34 у Львові.">
-    <title>215 × 140 — Львів. Шашкевич. Школа №34.</title>
-
+    <meta name="theme-color" content="#090b10">
+    <meta name="description" content="Інтерактивний спецпроєкт до 215-річчя Маркіяна Шашкевича та 140-річчя СЗШ №34 у Львові.">
+    <title>215 × 140 — інтерактивний спецпроєкт</title>
     <style>
         :root{
-            --bg:#08090c;
-            --panel:#101218;
-            --text:#f4f1e8;
-            --muted:#a3a6ae;
-            --line:rgba(255,255,255,.14);
-            --acid:#d7ff3f;
-            --orange:#ff6238;
-            --blue:#5f7cff;
-            --paper:#ece6d9;
-            --ink:#17181b;
+            --bg:#090b10; --panel:#111620; --panel2:#151c29; --text:#f2efe7; --muted:#9ca7b7;
+            --line:rgba(255,255,255,.12); --acid:#d8ff45; --orange:#ff633f; --blue:#5c79ff;
+            --cyan:#55d8ff; --paper:#ece6db; --ink:#17191e; --good:#74e08a; --bad:#ff7b72;
             --max:1360px;
         }
         *{box-sizing:border-box}
         html{scroll-behavior:smooth}
         body{
-            margin:0;
-            background:var(--bg);
-            color:var(--text);
-            font-family:Arial,Helvetica,sans-serif;
-            overflow-x:hidden;
+            margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;
+            overflow-x:hidden
         }
-        a{color:inherit}
-        button{font:inherit}
-        img{display:block;width:100%;height:100%;object-fit:cover}
+        a{color:inherit} button{font:inherit} img{display:block;width:100%;height:100%;object-fit:cover}
         ::selection{background:var(--acid);color:#000}
         .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
-
         .noise{
-            position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:.08;
-            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
-            mix-blend-mode:soft-light;
+            position:fixed;inset:0;pointer-events:none;z-index:3000;opacity:.08;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+            mix-blend-mode:soft-light
         }
-        .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--orange),var(--acid));z-index:2200}
-
+        .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--orange),var(--acid));z-index:3100}
         header{
-            position:fixed;left:0;right:0;top:0;z-index:1500;
-            background:rgba(8,9,12,.68);backdrop-filter:blur(16px);
+            position:fixed;top:0;left:0;right:0;z-index:2000;background:rgba(9,11,16,.68);backdrop-filter:blur(16px);
             border-bottom:1px solid rgba(255,255,255,.08)
         }
-        .nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+        .nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
         .brand{text-decoration:none;font-size:18px;font-weight:900;letter-spacing:-.04em}
         .brand b{color:var(--acid)}
-        .navlinks{display:flex;gap:24px}
-        .navlinks a{text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#b7bbc4}
+        .navlinks{display:flex;gap:22px}
+        .navlinks a{text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#b8c0cc}
         .navlinks a:hover{color:white}
+        .hud{
+            display:flex;align-items:center;gap:10px;border:1px solid var(--line);padding:8px 10px;border-radius:999px;
+            font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#c5ccd8
+        }
+        .hud b{color:var(--acid);font-size:12px}
 
         .hero{
-            min-height:100vh;
-            position:relative;
-            overflow:hidden;
-            display:flex;align-items:flex-end;
+            min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end
         }
-        .hero-photo{
-            position:absolute;inset:0;
-            transform:scale(1.03);
-            will-change:transform
-        }
+        .hero-photo{position:absolute;inset:0;transform:scale(1.03)}
+        .hero-photo img{filter:saturate(.74) contrast(1.08)}
         .hero-photo:after{
             content:"";position:absolute;inset:0;
             background:
-                    linear-gradient(90deg,rgba(8,9,12,.96) 0%,rgba(8,9,12,.72) 42%,rgba(8,9,12,.18) 74%),
-                    linear-gradient(0deg,rgba(8,9,12,.94) 0%,transparent 45%),
-                    radial-gradient(circle at 80% 40%,transparent 0%,rgba(8,9,12,.22) 65%)
+                    linear-gradient(90deg,rgba(9,11,16,.96) 0%,rgba(9,11,16,.72) 42%,rgba(9,11,16,.20) 76%),
+                    linear-gradient(0deg,rgba(9,11,16,.94),transparent 48%)
         }
-        .hero-photo img{filter:saturate(.72) contrast(1.07)}
-        .hero-grid{
-            position:absolute;inset:0;
-            background:
-                    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-                    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-            background-size:58px 58px;
-            opacity:.45;
-            mask-image:linear-gradient(to bottom,black,transparent 88%)
+        .hero-grid{position:absolute;inset:0;background:
+                linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+            background-size:58px 58px;opacity:.5;mask-image:linear-gradient(to bottom,black,transparent 90%)
         }
-        .hero-inner{
-            position:relative;z-index:3;
-            padding:150px 0 64px;
-            width:100%;
-        }
-        .kicker{
-            display:flex;align-items:center;gap:13px;
-            font-size:10px;text-transform:uppercase;letter-spacing:.17em;color:var(--acid)
-        }
+        .hero-inner{position:relative;z-index:3;padding:150px 0 68px;width:100%}
+        .kicker{display:flex;align-items:center;gap:12px;font-size:10px;text-transform:uppercase;letter-spacing:.17em;color:var(--acid)}
         .kicker:before{content:"";width:44px;height:2px;background:var(--acid)}
-        h1{
-            max-width:1120px;
-            margin:24px 0 24px;
-            font-size:clamp(65px,9.5vw,150px);
-            line-height:.82;
-            letter-spacing:-.078em;
-            font-weight:900;
-        }
-        h1 .stroke{color:transparent;-webkit-text-stroke:1.4px rgba(255,255,255,.75)}
+        h1{margin:24px 0 24px;font-size:clamp(66px,9.5vw,150px);line-height:.82;letter-spacing:-.078em;font-weight:900;max-width:1120px}
         h1 .acid{color:var(--acid)}
-        .hero-desc{max-width:680px;font-size:17px;line-height:1.7;color:#c8cbd1}
-        .hero-bottom{
-            margin-top:55px;
-            display:grid;grid-template-columns:1fr auto;
-            align-items:end;gap:30px;
-            border-top:1px solid rgba(255,255,255,.18);padding-top:18px
+        h1 .stroke{color:transparent;-webkit-text-stroke:1.4px rgba(255,255,255,.76)}
+        .hero-desc{max-width:690px;font-size:17px;line-height:1.72;color:#c9ced6}
+        .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+        .btn{
+            border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:white;text-decoration:none;
+            padding:13px 17px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;cursor:pointer
         }
-        .hero-years{display:flex;gap:42px}
-        .hero-year b{display:block;font-size:27px;letter-spacing:-.04em}
-        .hero-year span{display:block;margin-top:3px;font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#9298a4}
-        .scroll-note{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:#8f96a2}
+        .btn.primary{background:var(--orange);border-color:var(--orange)}
+        .btn:hover{transform:translateY(-2px)}
+        .hero-years{margin-top:50px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px;display:flex;gap:46px}
+        .hero-year b{display:block;font-size:28px;letter-spacing:-.04em}
+        .hero-year span{display:block;margin-top:3px;font-size:9px;line-height:1.45;text-transform:uppercase;letter-spacing:.12em;color:#929ba9}
 
-        .marquee{overflow:hidden;background:var(--acid);color:#090a0c}
-        .marquee-track{
-            width:max-content;display:flex;gap:22px;align-items:center;padding:13px 0;
-            font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;
-            animation:mar 23s linear infinite
-        }
+        .marquee{overflow:hidden;background:var(--acid);color:#090b10}
+        .marquee-track{width:max-content;display:flex;gap:22px;align-items:center;padding:13px 0;font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;animation:mar 23s linear infinite}
         .marquee-track i{width:6px;height:6px;border-radius:50%;background:#0a0b0c}
         @keyframes mar{to{transform:translateX(-50%)}}
 
-        .section{padding:112px 0;border-bottom:1px solid var(--line);position:relative}
+        .section{padding:110px 0;border-bottom:1px solid var(--line);position:relative}
         .section-head{display:grid;grid-template-columns:170px 1fr;gap:42px;margin-bottom:62px}
-        .index{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--acid);padding-top:11px}
-        .section h2{
-            margin:0;
-            max-width:1020px;
-            font-size:clamp(43px,6vw,88px);
-            line-height:.95;letter-spacing:-.06em;font-weight:850
-        }
+        .index{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--acid);padding-top:10px}
+        .section h2{margin:0;max-width:1040px;font-size:clamp(43px,6vw,88px);line-height:.95;letter-spacing:-.06em;font-weight:850}
+        .lead{max-width:760px;color:#aab4c3;line-height:1.72;font-size:17px}
 
-        .story-stage{
-            display:grid;grid-template-columns:1fr 1fr;min-height:720px;border:1px solid var(--line)
-        }
-        .story-image{position:relative;overflow:hidden;background:#18191e}
-        .story-image img{filter:saturate(.76);transition:transform .7s ease}
-        .story-stage:hover .story-image img{transform:scale(1.025)}
-        .story-image:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,9,12,.58),transparent 48%)}
-        .photo-tag{
-            position:absolute;z-index:3;left:20px;bottom:18px;
-            background:rgba(8,9,12,.72);backdrop-filter:blur(10px);
-            border:1px solid rgba(255,255,255,.2);
-            padding:9px 11px;font-size:9px;text-transform:uppercase;letter-spacing:.13em
-        }
-        .story-copy{
-            padding:38px;
-            display:flex;flex-direction:column;justify-content:space-between;
-            background:var(--panel)
-        }
-        .story-copy .big{
-            font-size:clamp(110px,15vw,220px);
-            line-height:.7;letter-spacing:-.09em;font-weight:900;color:var(--orange)
-        }
-        .story-copy h3{font-size:41px;letter-spacing:-.05em;margin:32px 0 14px}
-        .story-copy p{color:#aab0bb;line-height:1.72;max-width:570px}
-        .story-list{margin-top:30px;border-top:1px solid var(--line)}
-        .story-row{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px}
-        .story-row b{color:var(--acid)}
-        .story-row span{color:#c7ccd4}
+        .story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+        .visual-card{min-height:660px;position:relative;overflow:hidden;border:1px solid var(--line);background:#151922}
+        .visual-card:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(9,11,16,.65),transparent 55%)}
+        .visual-card .tag{position:absolute;left:18px;bottom:18px;z-index:4;background:rgba(9,11,16,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
+        .story-copy{border:1px solid var(--line);background:var(--panel);padding:34px;display:flex;flex-direction:column;justify-content:space-between}
+        .story-copy .n{font-size:clamp(120px,16vw,230px);line-height:.7;letter-spacing:-.09em;font-weight:900;color:var(--orange)}
+        .story-copy h3{font-size:40px;letter-spacing:-.05em;margin:28px 0 12px}
+        .story-copy p{color:#a6afbd;line-height:1.72}
+        .mini-list{margin-top:30px;border-top:1px solid var(--line)}
+        .mini-row{display:grid;grid-template-columns:95px 1fr;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-size:13px}
+        .mini-row b{color:var(--acid)} .mini-row span{color:#c5ccd6}
 
-        .book-scene{
-            background:var(--paper);color:var(--ink)
+        .games{background:#0c1018}
+        .game-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+        .game-tab{
+            border:1px solid var(--line);background:#111722;color:#b4becd;padding:11px 14px;cursor:pointer;
+            font-size:10px;text-transform:uppercase;letter-spacing:.11em
         }
-        .book-scene .index{color:#d8452c}
-        .book-scene h2{color:#15171a}
-        .book-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px}
-        .book-photo{
-            min-height:680px;background:#d9d2c5;padding:30px;position:relative;overflow:hidden
-        }
-        .book-photo img{
-            object-fit:contain;
-            filter:contrast(1.02);
-            box-shadow:0 28px 55px rgba(20,20,20,.18);
-            background:white
-        }
-        .book-photo:before{
-            content:"1837";position:absolute;right:-30px;bottom:-45px;
-            font-size:165px;font-weight:900;letter-spacing:-.09em;color:rgba(20,20,20,.07);z-index:0
-        }
-        .book-info{
-            border:1px solid rgba(20,20,20,.15);padding:34px;background:#f3eee5;
-            display:flex;flex-direction:column;justify-content:space-between
-        }
-        .book-info .mini{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#b53d29}
-        .book-info h3{font-size:48px;line-height:.96;letter-spacing:-.055em;margin:18px 0}
-        .book-info p{color:#5d6168;line-height:1.72}
-        .book-facts{border-top:1px solid rgba(20,20,20,.14);margin-top:34px}
-        .book-fact{padding:16px 0;border-bottom:1px solid rgba(20,20,20,.13);display:grid;grid-template-columns:95px 1fr;gap:20px}
-        .book-fact b{color:#b53d29}
-        .book-fact span{color:#535962}
+        .game-tab.active{background:var(--acid);color:#0b0c0e;border-color:var(--acid)}
+        .game-shell{border:1px solid var(--line);background:var(--panel);min-height:620px;position:relative;overflow:hidden}
+        .game-panel{display:none;padding:30px}
+        .game-panel.active{display:block}
+        .game-topline{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:28px;border-bottom:1px solid var(--line);padding-bottom:16px}
+        .game-topline h3{margin:0;font-size:30px;letter-spacing:-.04em}
+        .game-topline .score{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#8e99aa}
+        .game-topline .score b{color:var(--acid);font-size:14px}
 
-        .timeline-wrap{position:relative}
-        .timeline-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-        .timeline-top span{font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:#7e8797}
+        .quiz-progress{height:6px;background:#1d2431;margin-bottom:25px;overflow:hidden}
+        .quiz-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--acid));transition:.3s}
+        .q-meta{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#778295;margin-bottom:11px}
+        .q-title{font-size:34px;letter-spacing:-.04em;max-width:900px;margin:0 0 24px}
+        .answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .answer{
+            border:1px solid var(--line);background:#0d121b;color:#d5dbe4;text-align:left;padding:16px;cursor:pointer;min-height:76px;
+            transition:.2s ease
+        }
+        .answer:hover{border-color:#63738c;background:#111827}
+        .answer.correct{border-color:var(--good);background:rgba(116,224,138,.1)}
+        .answer.wrong{border-color:var(--bad);background:rgba(255,123,114,.1)}
+        .feedback{min-height:60px;margin-top:18px;color:#aeb7c5;line-height:1.6}
+        .feedback.good{color:var(--good)} .feedback.bad{color:var(--bad)}
+        .next-q{display:none;margin-top:10px}
+
+        .sort-help{color:#8893a4;line-height:1.6;margin-bottom:20px}
+        .sort-list{display:grid;gap:10px}
+        .sort-item{
+            border:1px solid var(--line);background:#0d131d;padding:16px 18px;cursor:grab;display:grid;
+            grid-template-columns:38px 1fr auto;gap:14px;align-items:center;user-select:none
+        }
+        .sort-item.dragging{opacity:.45}
+        .handle{font-size:18px;color:#58657a}
+        .sort-item strong{font-size:16px}
+        .sort-item span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#6d7889}
+        .sort-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+        .check-result{margin-top:16px;min-height:40px;color:#aeb7c5}
+        .check-result.good{color:var(--good)} .check-result.bad{color:var(--bad)}
+
+        .detective-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
+        .artifact{min-height:430px;border:1px solid var(--line);background:#0b1017;position:relative;overflow:hidden}
+        .artifact img{object-fit:contain;background:#e6dfd1}
+        .case{border:1px solid var(--line);padding:24px;background:#0d131d}
+        .case small{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#6f7c8f}
+        .case h4{font-size:30px;letter-spacing:-.04em;margin:12px 0 20px}
+        .case-options{display:grid;gap:10px}
+        .case-option{border:1px solid var(--line);background:#111823;color:white;padding:14px;text-align:left;cursor:pointer}
+        .case-option:hover{border-color:#63738c}
+        .case-option.correct{border-color:var(--good);background:rgba(116,224,138,.1)}
+        .case-option.wrong{border-color:var(--bad);background:rgba(255,123,114,.1)}
+        .case-feedback{margin-top:18px;min-height:60px;color:#aeb7c5;line-height:1.6}
+        .case-next{display:none}
+
+        .timeline-section{background:#0b0e14}
+        .timeline-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+        .timeline-controls span{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#7b8798}
         .timeline-buttons{display:flex;gap:8px}
-        .timeline-buttons button{
-            width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#11141c;color:white;cursor:pointer
-        }
-        .timeline-buttons button:hover{background:#1b2230}
-        .timeline{
-            display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;padding-bottom:5px
-        }
+        .timeline-buttons button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#111722;color:white;cursor:pointer}
+        .timeline{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab}
         .timeline::-webkit-scrollbar{display:none}
-        .tcard{
-            min-width:330px;min-height:380px;scroll-snap-align:start;
-            background:#10131b;border:1px solid var(--line);padding:26px;
-            display:flex;flex-direction:column;justify-content:space-between;transition:.25s ease
-        }
-        .tcard:hover{transform:translateY(-5px);border-color:rgba(215,255,63,.45)}
+        .tcard{min-width:325px;min-height:370px;scroll-snap-align:start;border:1px solid var(--line);background:#10151e;padding:25px;display:flex;flex-direction:column;justify-content:space-between}
         .tcard .year{font-size:62px;font-weight:900;letter-spacing:-.07em;color:var(--acid)}
-        .tcard:nth-child(2n) .year{color:var(--orange)}
-        .tcard:nth-child(3n) .year{color:#6e8cff}
+        .tcard:nth-child(even) .year{color:var(--orange)}
         .tcard h3{font-size:26px;letter-spacing:-.04em;margin:0 0 10px}
-        .tcard p{color:#939eaf;line-height:1.65;font-size:14px;margin:0}
-        .tcard small{text-transform:uppercase;letter-spacing:.13em;color:#5c6676;font-size:9px}
+        .tcard p{margin:0;color:#929eaf;line-height:1.65;font-size:14px}
 
-        .city{
-            min-height:90vh;position:relative;overflow:hidden;display:flex;align-items:center
-        }
-        .city-bg{position:absolute;inset:0}
-        .city-bg img{filter:saturate(.68) contrast(1.08)}
-        .city-bg:after{
-            content:"";position:absolute;inset:0;
-            background:linear-gradient(90deg,rgba(8,9,12,.94) 0%,rgba(8,9,12,.68) 48%,rgba(8,9,12,.18) 100%)
-        }
-        .city-content{position:relative;z-index:3}
-        .city-content .index{margin-bottom:20px}
-        .city h2{max-width:900px}
-        .city p{max-width:600px;color:#c5cad2;line-height:1.72;margin-top:25px}
-        .city-chip{
-            display:inline-flex;align-items:center;gap:10px;margin-top:28px;
-            border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 15px;
-            font-size:10px;text-transform:uppercase;letter-spacing:.12em
-        }
-        .city-chip i{width:7px;height:7px;border-radius:50%;background:var(--orange)}
-
-        .school{
-            background:#0d1017
-        }
-        .school-layout{
-            display:grid;grid-template-columns:1.16fr .84fr;gap:16px
-        }
-        .school-photo{
-            min-height:700px;position:relative;overflow:hidden;border:1px solid var(--line);background:#16191f
-        }
-        .school-photo img{filter:saturate(.82) contrast(1.03);transition:transform .8s ease}
-        .school-photo:hover img{transform:scale(1.025)}
-        .school-label{
-            position:absolute;left:20px;top:20px;background:rgba(8,9,12,.78);backdrop-filter:blur(9px);
-            padding:10px 12px;border:1px solid rgba(255,255,255,.2);
-            font-size:9px;text-transform:uppercase;letter-spacing:.13em
-        }
-        .school-panel{
-            border:1px solid var(--line);padding:30px;
-            display:flex;flex-direction:column;justify-content:space-between
-        }
-        .school-panel .n{
-            font-size:clamp(130px,17vw,245px);font-weight:900;line-height:.69;letter-spacing:-.09em;color:var(--blue)
-        }
+        .school{background:#0f131c}
+        .school-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:16px}
+        .school-photo{min-height:680px;border:1px solid var(--line);position:relative;overflow:hidden}
+        .school-photo .label{position:absolute;left:18px;top:18px;background:rgba(9,11,16,.75);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);padding:9px 11px;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
+        .school-panel{border:1px solid var(--line);padding:30px;display:flex;flex-direction:column;justify-content:space-between}
+        .school-panel .n{font-size:clamp(130px,17vw,240px);font-weight:900;line-height:.7;letter-spacing:-.09em;color:var(--blue)}
         .school-panel h3{font-size:36px;letter-spacing:-.05em;margin:28px 0 12px}
         .school-panel p{color:#a3adbd;line-height:1.7}
-        .hotfacts{margin-top:28px}
-        .hotfact{
-            width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:transparent;color:white;
-            padding:15px 0;cursor:pointer;display:grid;grid-template-columns:90px 1fr;gap:16px
-        }
-        .hotfact b{color:var(--acid)}
-        .hotfact span{color:#9aa6b7}
-        .hotfact.active span{color:white}
-
-        .gallery{
-            display:grid;grid-template-columns:1.15fr .85fr .85fr;grid-template-rows:350px 300px;gap:12px
-        }
-        .gitem{position:relative;overflow:hidden;background:#16181d}
-        .gitem.a{grid-row:1/3}
-        .gitem.b{grid-column:2/4}
-        .gitem img{transition:transform .6s ease;filter:saturate(.78) contrast(1.04)}
-        .gitem:hover img{transform:scale(1.035)}
-        .gcaption{
-            position:absolute;left:14px;bottom:14px;background:rgba(8,9,12,.76);backdrop-filter:blur(8px);
-            border:1px solid rgba(255,255,255,.18);padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:.12em
-        }
+        .fact-buttons{margin-top:26px}
+        .fact-btn{width:100%;border:0;border-top:1px solid var(--line);background:transparent;color:white;text-align:left;padding:14px 0;display:grid;grid-template-columns:90px 1fr;gap:15px;cursor:pointer}
+        .fact-btn b{color:var(--acid)} .fact-btn span{color:#94a0b2}
+        .fact-btn.active span{color:white}
 
         .final{
-            min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;
-            background:
-                    radial-gradient(circle at 80% 15%,rgba(95,124,255,.55),transparent 32%),
-                    radial-gradient(circle at 20% 80%,rgba(255,98,56,.55),transparent 28%),
-                    #090b10
+            min-height:86vh;display:flex;align-items:center;position:relative;overflow:hidden;
+            background:radial-gradient(circle at 80% 20%,rgba(92,121,255,.5),transparent 32%),radial-gradient(circle at 20% 80%,rgba(255,99,63,.5),transparent 28%),#090b10
         }
-        .final:after{
-            content:"215×140";position:absolute;right:-20px;bottom:-60px;
-            font-size:210px;font-weight:900;letter-spacing:-.08em;color:rgba(255,255,255,.04)
-        }
-        .final .wrap{position:relative;z-index:3}
-        .final h2{
-            font-size:clamp(65px,9vw,132px);line-height:.83;letter-spacing:-.075em;max-width:1160px
-        }
+        .final:after{content:"215×140";position:absolute;right:-20px;bottom:-60px;font-size:210px;font-weight:900;letter-spacing:-.08em;color:rgba(255,255,255,.04)}
+        .final .wrap{position:relative;z-index:2}
+        .final h2{font-size:clamp(64px,9vw,132px);line-height:.84;letter-spacing:-.075em;max-width:1180px}
         .final h2 span{color:var(--acid)}
-        .final p{max-width:640px;color:#b6bfcd;line-height:1.7;margin-top:30px}
-        .final-line{
-            margin-top:55px;border-top:1px solid var(--line);padding-top:16px;
-            display:flex;justify-content:space-between;gap:20px;
-            font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#8f99aa
+        .final p{max-width:650px;color:#b7c0cd;line-height:1.7}
+        .final-score{
+            margin-top:30px;border:1px solid var(--line);display:inline-grid;grid-template-columns:auto auto;gap:18px;align-items:center;padding:16px 18px;background:rgba(255,255,255,.03)
         }
+        .final-score b{font-size:36px;color:var(--acid)}
+        .final-score span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#8e99aa}
 
-        .credits{background:#050609;padding:30px 0;color:#6f7785}
-        .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;font-size:10px;line-height:1.7}
-        .credits a{color:#aab2bf;text-decoration:none}
-        .credits a:hover{color:white}
+        footer{background:#050609;padding:26px 0;color:#667080}
+        .footer-row{display:flex;justify-content:space-between;gap:20px;font-size:10px;text-transform:uppercase;letter-spacing:.1em}
 
-        .reveal{opacity:0;transform:translateY(25px);transition:.75s ease}
+        .reveal{opacity:0;transform:translateY(24px);transition:.75s ease}
         .reveal.show{opacity:1;transform:none}
+        .flash{animation:flash .45s ease}
+        @keyframes flash{0%{box-shadow:0 0 0 0 rgba(215,255,63,.55)}100%{box-shadow:0 0 0 22px rgba(215,255,63,0)}}
 
         @media(max-width:980px){
-            .section-head,.story-stage,.book-layout,.school-layout{grid-template-columns:1fr}
-            .story-image{min-height:600px}
-            .book-photo{min-height:600px}
-            .gallery{grid-template-columns:1fr 1fr;grid-template-rows:430px 290px 290px}
-            .gitem.a{grid-column:1/3;grid-row:auto}
-            .gitem.b{grid-column:1/3}
+            .navlinks{display:none}
+            .section-head,.story-grid,.school-grid,.detective-grid{grid-template-columns:1fr}
+            .visual-card,.school-photo{min-height:560px}
+            .answers{grid-template-columns:1fr}
         }
         @media(max-width:650px){
             .wrap{width:min(var(--max),calc(100% - 26px))}
-            .navlinks{display:none}
+            .hud{display:none}
             .hero-inner{padding-top:125px}
-            h1{font-size:62px}
-            .hero-bottom{grid-template-columns:1fr}
+            h1{font-size:61px}
             .hero-years{gap:20px;flex-wrap:wrap}
             .section{padding:78px 0}
-            .section-head{gap:15px}
-            .story-copy,.book-info,.school-panel{padding:22px}
-            .story-image{min-height:450px}
-            .book-photo{min-height:500px;padding:16px}
-            .timeline .tcard{min-width:280px}
-            .school-photo{min-height:500px}
-            .gallery{display:block}
-            .gitem{height:330px;margin-bottom:10px}
+            .section-head{gap:14px}
+            .story-copy,.game-panel,.school-panel{padding:22px}
+            .visual-card{min-height:430px}
+            .game-shell{min-height:700px}
+            .q-title{font-size:28px}
+            .tcard{min-width:280px}
+            .school-photo{min-height:480px}
             .final{min-height:760px}
-            .final-line,.credits-grid{grid-template-columns:1fr;display:grid}
+            .footer-row{flex-direction:column}
         }
         @media(prefers-reduced-motion:reduce){
             html{scroll-behavior:auto}
@@ -360,28 +248,24 @@
     <div class="wrap nav">
         <a class="brand" href="#top">215 <b>×</b> 140</a>
         <nav class="navlinks">
-            <a href="#shashkevych">Шашкевич</a>
-            <a href="#timeline">Хронологія</a>
-            <a href="#lviv">Львів</a>
-            <a href="#school">Школа №34</a>
+            <a href="#story">Історія</a>
+            <a href="#games">Міні-ігри</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#school">Школа</a>
         </nav>
+        <div class="hud">score <b id="hudScore">0</b></div>
     </div>
 </header>
 
 <main id="top">
-
     <section class="hero">
         <div class="hero-photo" id="heroPhoto">
-            <img
-                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/School_%E2%84%96_34%2C_Lviv.jpg?width=2200"
-                    alt="Середня загальноосвітня школа №34 у Львові, вул. Замкнена, 8"
-                    referrerpolicy="no-referrer"
-            >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/School_%E2%84%96_34%2C_Lviv.jpg" alt="Школа №34 у Львові" referrerpolicy="no-referrer">
         </div>
         <div class="hero-grid"></div>
 
         <div class="wrap hero-inner">
-            <div class="kicker reveal">Lviv · anniversary interactive · 2026</div>
+            <div class="kicker reveal">interactive anniversary project / lviv / 2026</div>
             <h1 class="reveal">
                 <span class="acid">215</span> YEARS<br>
                 OF <span class="stroke">VOICE</span><br>
@@ -389,354 +273,457 @@
                 OF SCHOOL
             </h1>
             <p class="hero-desc reveal">
-                Маркіян Шашкевич. Школа №34. Львів. Не статичний ювілейний стенд, а інтерактивна історія про мову,
-                освіту й пам’ять, яка продовжує працювати сьогодні.
+                Історія, яку не просто читаєш. Тут можна гортати, перетягувати, відповідати, збирати хронологію
+                і перевіряти себе.
             </p>
-
-            <div class="hero-bottom reveal">
-                <div class="hero-years">
-                    <div class="hero-year"><b>1811</b><span>народження<br>Шашкевича</span></div>
-                    <div class="hero-year"><b>1886</b><span>заснування<br>школи</span></div>
-                    <div class="hero-year"><b>2026</b><span>подвійний<br>ювілей</span></div>
-                </div>
-                <div class="scroll-note">scroll ↓ to explore</div>
+            <div class="hero-cta reveal">
+                <a class="btn primary" href="#games">Перейти до міні-ігор</a>
+                <a class="btn" href="#story">Почати з історії</a>
+            </div>
+            <div class="hero-years reveal">
+                <div class="hero-year"><b>1811</b><span>народження<br>Шашкевича</span></div>
+                <div class="hero-year"><b>1886</b><span>заснування<br>школи</span></div>
+                <div class="hero-year"><b>2026</b><span>подвійний<br>ювілей</span></div>
             </div>
         </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
         <div class="marquee-track">
-            <span>Маркіян Шашкевич / 215</span><i></i><span>СЗШ №34 / 140</span><i></i><span>Львів / 2026</span><i></i><span>мова / освіта / пам’ять</span><i></i>
-            <span>Маркіян Шашкевич / 215</span><i></i><span>СЗШ №34 / 140</span><i></i><span>Львів / 2026</span><i></i><span>мова / освіта / пам’ять</span><i></i>
+            <span>Маркіян Шашкевич / 215</span><i></i><span>СЗШ №34 / 140</span><i></i><span>Львів / 2026</span><i></i><span>3 mini-games inside</span><i></i>
+            <span>Маркіян Шашкевич / 215</span><i></i><span>СЗШ №34 / 140</span><i></i><span>Львів / 2026</span><i></i><span>3 mini-games inside</span><i></i>
         </div>
     </div>
 
-    <section class="section" id="shashkevych">
+    <section class="section" id="story">
         <div class="wrap">
             <div class="section-head">
-                <div class="index reveal">01 / Person & city</div>
-                <h2 class="reveal">Не портрет у рамці. Постать, що залишилась у міському просторі.</h2>
+                <div class="index reveal">01 / Story</div>
+                <h2 class="reveal">Перед грою — коротко про те, навколо чого все побудовано.</h2>
             </div>
 
-            <div class="story-stage reveal">
-                <div class="story-image">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Monument_of_Markiian_Shashkevych_and_bell_tower.jpg?width=1800"
-                            alt="Пам’ятник Маркіянові Шашкевичу у Львові"
-                            referrerpolicy="no-referrer"
-                    >
-                    <div class="photo-tag">Львів · пам’ятник Маркіянові Шашкевичу</div>
+            <div class="story-grid reveal">
+                <div class="visual-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Monument_of_Markiian_Shashkevych_and_bell_tower.jpg" alt="Пам’ятник Маркіянові Шашкевичу" referrerpolicy="no-referrer">
+                    <div class="tag">Маркіян Шашкевич · Львів</div>
                 </div>
 
                 <div class="story-copy">
                     <div>
-                        <div class="big">215</div>
-                        <h3>Шашкевич як культурний імпульс.</h3>
+                        <div class="n">215</div>
+                        <h3>Від слова — до школи.</h3>
                         <p>
-                            Поет, перекладач і священник Маркіян Шашкевич став одним із центральних діячів українського
-                            культурного відродження в Галичині. Його ім’я пов’язане з «Руською трійцею» та переходом
-                            живої української мови в літературний простір.
+                            Шашкевич став одним із символів українського культурного пробудження в Галичині.
+                            Через десятиліття боротьба за українську мову отримала іншу форму — боротьбу за українську освіту у Львові.
                         </p>
                     </div>
 
-                    <div class="story-list">
-                        <div class="story-row"><b>1811</b><span>Народився 6 листопада.</span></div>
-                        <div class="story-row"><b>1830-ті</b><span>Діяльність «Руської трійці».</span></div>
-                        <div class="story-row"><b>1837</b><span>Вихід «Русалки Дністрової».</span></div>
-                        <div class="story-row"><b>1843</b><span>Завершення короткого життя — початок довгої культурної пам’яті.</span></div>
+                    <div class="mini-list">
+                        <div class="mini-row"><b>1811</b><span>Народився Маркіян Шашкевич.</span></div>
+                        <div class="mini-row"><b>1837</b><span>Вийшла «Русалка Дністровая».</span></div>
+                        <div class="mini-row"><b>1886</b><span>Засновано школу ім. Маркіяна Шашкевича.</span></div>
+                        <div class="mini-row"><b>1928</b><span>Школа отримала будівлю на вул. Замкненій, 8.</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section book-scene">
+    <section class="section games" id="games">
         <div class="wrap">
             <div class="section-head">
-                <div class="index reveal">02 / The book</div>
-                <h2 class="reveal">Одна титульна сторінка, яка виглядає сильніше за будь-який декоративний банер.</h2>
+                <div class="index reveal">02 / Mini-games</div>
+                <h2 class="reveal">Три гри. Один спільний рахунок.</h2>
             </div>
 
-            <div class="book-layout">
-                <div class="book-photo reveal">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%D0%A0%D1%83%D1%81%D0%B0%D0%BB%D0%BA%D0%B0_%D0%94%D0%BD%D1%A3%D1%81%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_-_tytul_page.jpg?width=1100"
-                            alt="Титульна сторінка Русалки Дністрової"
-                            referrerpolicy="no-referrer"
-                    >
-                </div>
+            <div class="game-tabs reveal">
+                <button class="game-tab active" data-game="quiz">01 / Квіз</button>
+                <button class="game-tab" data-game="sort">02 / Хронологія</button>
+                <button class="game-tab" data-game="detective">03 / Архівний детектив</button>
+            </div>
 
-                <div class="book-info reveal">
-                    <div>
-                        <div class="mini">«Русалка Дністровая» · 1837</div>
-                        <h3>Книжка як культурна подія.</h3>
-                        <p>
-                            Альманах став одним із символів нового українського літературного руху в Галичині.
-                            У дизайні сайту він працює не як “ілюстрація до тексту”, а як самостійний візуальний артефакт.
-                        </p>
-                    </div>
+            <div class="game-shell reveal">
 
-                    <div class="book-facts">
-                        <div class="book-fact"><b>1837</b><span>Видання в Буді.</span></div>
-                        <div class="book-fact"><b>Мова</b><span>Орієнтація на живу народну українську мову.</span></div>
-                        <div class="book-fact"><b>Рух</b><span>Пов’язаний із діяльністю «Руської трійці».</span></div>
-                        <div class="book-fact"><b>Символ</b><span>Одна з ключових пам’яток українського романтизму в Галичині.</span></div>
+                <section class="game-panel active" id="game-quiz">
+                    <div class="game-topline">
+                        <h3>Швидкий квіз</h3>
+                        <div class="score">quiz score <b id="quizScore">0</b></div>
                     </div>
-                </div>
+                    <div class="quiz-progress"><span id="quizBar"></span></div>
+                    <div class="q-meta" id="qMeta"></div>
+                    <h4 class="q-title" id="qTitle"></h4>
+                    <div class="answers" id="answers"></div>
+                    <div class="feedback" id="feedback"></div>
+                    <button class="btn primary next-q" id="nextQ">Наступне питання</button>
+                </section>
+
+                <section class="game-panel" id="game-sort">
+                    <div class="game-topline">
+                        <h3>Віднови хронологію</h3>
+                        <div class="score">reward <b>+30</b></div>
+                    </div>
+                    <p class="sort-help">Перетягни події так, щоб вони стояли від найранішої до найпізнішої. Потім натисни «Перевірити».</p>
+                    <div class="sort-list" id="sortList">
+                        <div class="sort-item" draggable="true" data-order="4"><div class="handle">≡</div><strong>Засновано школу ім. М. Шашкевича</strong><span>1886</span></div>
+                        <div class="sort-item" draggable="true" data-order="2"><div class="handle">≡</div><strong>Вихід «Русалки Дністрової»</strong><span>1837</span></div>
+                        <div class="sort-item" draggable="true" data-order="5"><div class="handle">≡</div><strong>Школа отримує будівлю на Замкненій, 8</strong><span>1928</span></div>
+                        <div class="sort-item" draggable="true" data-order="1"><div class="handle">≡</div><strong>Народження Маркіяна Шашкевича</strong><span>1811</span></div>
+                        <div class="sort-item" draggable="true" data-order="3"><div class="handle">≡</div><strong>Петиція щодо української народної школи у Львові</strong><span>1875</span></div>
+                    </div>
+                    <div class="sort-actions">
+                        <button class="btn primary" id="checkSort">Перевірити</button>
+                        <button class="btn" id="shuffleSort">Перемішати</button>
+                    </div>
+                    <div class="check-result" id="sortResult"></div>
+                </section>
+
+                <section class="game-panel" id="game-detective">
+                    <div class="game-topline">
+                        <h3>Архівний детектив</h3>
+                        <div class="score">cases <b id="caseCount">1/3</b></div>
+                    </div>
+                    <div class="detective-grid">
+                        <div class="artifact">
+                            <img id="caseImage"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/e/e3/%D0%A0%D1%83%D1%81%D0%B0%D0%BB%D0%BA%D0%B0_%D0%94%D0%BD%D1%A3%D1%81%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_-_tytul_page.jpg"
+                                 alt="Архівний матеріал"
+                                 referrerpolicy="no-referrer">
+                        </div>
+                        <div class="case">
+                            <small id="caseLabel">case 01</small>
+                            <h4 id="caseQuestion">До якого року належить цей артефакт?</h4>
+                            <div class="case-options" id="caseOptions"></div>
+                            <div class="case-feedback" id="caseFeedback"></div>
+                            <button class="btn primary case-next" id="caseNext">Наступна справа</button>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </section>
 
-    <section class="section" id="timeline">
+    <section class="section timeline-section" id="timeline">
         <div class="wrap">
             <div class="section-head">
-                <div class="index reveal">03 / Drag timeline</div>
-                <h2 class="reveal">Тягни шкалу мишкою. Історія не мусить читатися зверху вниз.</h2>
+                <div class="index reveal">03 / Timeline</div>
+                <h2 class="reveal">Після гри — повна шкала часу. Її теж можна тягнути мишкою.</h2>
             </div>
-
-            <div class="timeline-wrap reveal">
-                <div class="timeline-top">
-                    <span>drag / wheel / arrows</span>
-                    <div class="timeline-buttons">
-                        <button id="prev" aria-label="Назад">←</button>
-                        <button id="next" aria-label="Вперед">→</button>
-                    </div>
-                </div>
-
-                <div class="timeline" id="timelineTrack">
-                    <article class="tcard">
-                        <small>event_01</small><div class="year">1811</div>
-                        <div><h3>Народження</h3><p>Початок історії Маркіяна Шашкевича.</p></div>
-                    </article>
-                    <article class="tcard">
-                        <small>event_02</small><div class="year">1837</div>
-                        <div><h3>«Русалка Дністровая»</h3><p>Альманах стає важливою подією культурного руху.</p></div>
-                    </article>
-                    <article class="tcard">
-                        <small>event_03</small><div class="year">1875</div>
-                        <div><h3>Петиція</h3><p>Руська Рада домагається української народної школи у Львові.</p></div>
-                    </article>
-                    <article class="tcard">
-                        <small>event_04</small><div class="year">1886</div>
-                        <div><h3>Школу засновано</h3><p>Починається історія школи ім. Маркіяна Шашкевича.</p></div>
-                    </article>
-                    <article class="tcard">
-                        <small>event_05</small><div class="year">1928</div>
-                        <div><h3>Замкнена, 8</h3><p>Для школи споруджується окрема будівля.</p></div>
-                    </article>
-                    <article class="tcard">
-                        <small>event_06</small><div class="year">2026</div>
-                        <div><h3>215 × 140</h3><p>Подвійний ювілей Шашкевича та школи №34.</p></div>
-                    </article>
+            <div class="timeline-controls reveal">
+                <span>drag / wheel / arrows</span>
+                <div class="timeline-buttons">
+                    <button id="prev">←</button>
+                    <button id="next">→</button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="city" id="lviv">
-        <div class="city-bg">
-            <img
-                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D0%A0%D0%B0%D1%82%D1%83%D1%88%D0%B0.jpg?width=2200"
-                    alt="Панорама центру Львова"
-                    referrerpolicy="no-referrer"
-            >
-        </div>
-
-        <div class="wrap city-content">
-            <div class="index reveal">04 / Lviv</div>
-            <h2 class="reveal">Місто — не фон. Воно третій герой цієї історії.</h2>
-            <p class="reveal">
-                Саме у Львові культурна ідея переходить у конкретну освітню інституцію.
-                Громада роками добивалася народної школи з українською мовою навчання.
-            </p>
-            <div class="city-chip reveal"><i></i> Львів · Замкнена, 8</div>
+            <div class="timeline reveal" id="timelineTrack">
+                <article class="tcard"><div class="year">1811</div><div><h3>Народження</h3><p>6 листопада народився Маркіян Семенович Шашкевич.</p></div></article>
+                <article class="tcard"><div class="year">1837</div><div><h3>«Русалка Дністровая»</h3><p>Альманах стає важливою культурною подією для українців Галичини.</p></div></article>
+                <article class="tcard"><div class="year">1875</div><div><h3>Петиція</h3><p>Руська Рада домагається відкриття української народної школи у Львові.</p></div></article>
+                <article class="tcard"><div class="year">1886</div><div><h3>Школу засновано</h3><p>Починається історія школи ім. Маркіяна Шашкевича.</p></div></article>
+                <article class="tcard"><div class="year">1928</div><div><h3>Замкнена, 8</h3><p>Для школи споруджують окрему будівлю.</p></div></article>
+                <article class="tcard"><div class="year">2026</div><div><h3>215 × 140</h3><p>Подвійний ювілей: 215 років Шашкевичу та 140 років школі.</p></div></article>
+            </div>
         </div>
     </section>
 
     <section class="section school" id="school">
         <div class="wrap">
             <div class="section-head">
-                <div class="index reveal">05 / School №34</div>
-                <h2 class="reveal">Тепер — реальна школа, а не намальований фасад.</h2>
+                <div class="index reveal">04 / School №34</div>
+                <h2 class="reveal">Реальна школа — і клікабельні факти про її історію.</h2>
             </div>
 
-            <div class="school-layout reveal">
+            <div class="school-grid reveal">
                 <div class="school-photo">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/School_%E2%84%96_34%2C_Lviv.jpg?width=1800"
-                            alt="Школа №34 ім. Маркіяна Шашкевича у Львові"
-                            referrerpolicy="no-referrer"
-                    >
-                    <div class="school-label">School №34 · Замкнена, 8 · Львів</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/School_%E2%84%96_34%2C_Lviv.jpg" alt="Школа №34 у Львові" referrerpolicy="no-referrer">
+                    <div class="label">СЗШ №34 · вул. Замкнена, 8 · Львів</div>
                 </div>
 
                 <div class="school-panel">
                     <div>
                         <div class="n">140</div>
-                        <h3>Від петицій — до власної школи.</h3>
-                        <p id="schoolText">
-                            Всенародну школу ім. Маркіяна Шашкевича засновано у 1886 році після багаторічної боротьби львівської громади.
-                        </p>
+                        <h3>Історія в деталях</h3>
+                        <p id="schoolText">Школу ім. Маркіяна Шашкевича засновано у 1886 році після тривалих звернень української громади.</p>
                     </div>
-
-                    <div class="hotfacts">
-                        <button class="hotfact active" data-text="Всенародну школу ім. Маркіяна Шашкевича засновано у 1886 році після багаторічної боротьби львівської громади.">
-                            <b>1886</b><span>заснування школи</span>
-                        </button>
-                        <button class="hotfact" data-text="Офіційна історія школи згадує петиції 1875 та 1877 років з вимогою відкрити у Львові школу з українською мовою навчання.">
-                            <b>1875–77</b><span>петиції громади</span>
-                        </button>
-                        <button class="hotfact" data-text="За сприяння митрополита Андрея Шептицького для школи спорудили окрему будівлю на вул. Замкненій, 8.">
-                            <b>1928</b><span>власна будівля</span>
-                        </button>
-                        <button class="hotfact" data-text="У 2026 році школа відзначає 140 років своєї освітньої традиції.">
-                            <b>2026</b><span>140 років</span>
-                        </button>
+                    <div class="fact-buttons">
+                        <button class="fact-btn active" data-text="Школу ім. Маркіяна Шашкевича засновано у 1886 році після тривалих звернень української громади."><b>1886</b><span>заснування школи</span></button>
+                        <button class="fact-btn" data-text="Офіційна історія школи згадує петиції 1875 та 1877 років щодо відкриття української народної школи у Львові."><b>1875–77</b><span>петиції громади</span></button>
+                        <button class="fact-btn" data-text="У 1928 році для школи спорудили окрему будівлю на вул. Замкненій, 8."><b>1928</b><span>власна будівля</span></button>
+                        <button class="fact-btn" data-text="У 2026 році школа відзначає 140 років своєї освітньої традиції."><b>2026</b><span>140 років</span></button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="wrap">
-            <div class="section-head">
-                <div class="index reveal">06 / Visual archive</div>
-                <h2 class="reveal">Фінальний колаж: місто, книга, пам’ять, школа.</h2>
-            </div>
-
-            <div class="gallery reveal">
-                <figure class="gitem a">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/School_%E2%84%96_34%2C_Lviv.jpg?width=1500"
-                            alt="Школа №34 у Львові"
-                            referrerpolicy="no-referrer"
-                    >
-                    <figcaption class="gcaption">Школа №34 · Львів</figcaption>
-                </figure>
-
-                <figure class="gitem b">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Panorama_of_Lviv_-_south.jpg?width=1900"
-                            alt="Панорама Львова"
-                            referrerpolicy="no-referrer"
-                    >
-                    <figcaption class="gcaption">Львів · панорама міста</figcaption>
-                </figure>
-
-                <figure class="gitem">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%D0%A0%D1%83%D1%81%D0%B0%D0%BB%D0%BA%D0%B0_%D0%94%D0%BD%D1%A3%D1%81%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_-_tytul_page.jpg?width=850"
-                            alt="Русалка Дністровая"
-                            referrerpolicy="no-referrer"
-                    >
-                    <figcaption class="gcaption">«Русалка Дністровая»</figcaption>
-                </figure>
-
-                <figure class="gitem">
-                    <img
-                            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%D0%93%D1%80%D0%BE%D0%B1%D0%BD%D0%B8%D1%86%D1%8F%2C_%D0%B2_%D1%8F%D0%BA%D1%96%D0%B9_%D0%BF%D0%BE%D1%85%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9_%D0%A8%D0%B0%D1%88%D0%BA%D0%B5%D0%B2%D0%B8%D1%87_%D0%9C%D0%B0%D1%80%D0%BA%D1%96%D1%8F%D0%BD%2C_%D0%9B%D0%B8%D1%87%D0%B0%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D1%86%D0%B2%D0%B8%D0%BD%D1%82%D0%B0%D1%80.jpg?width=1000"
-                            alt="Могила Маркіяна Шашкевича на Личаківському цвинтарі"
-                            referrerpolicy="no-referrer"
-                    >
-                    <figcaption class="gcaption">Личаківський цвинтар</figcaption>
-                </figure>
             </div>
         </div>
     </section>
 
     <section class="final">
         <div class="wrap">
-            <h2 class="reveal">Пам’ять може бути <span>живою.</span><br>І сайт теж.</h2>
-            <p class="reveal">
-                215 років від народження Маркіяна Шашкевича. 140 років школі №34.
-                Одна історія про Львів, українське слово та освіту.
-            </p>
-            <div class="final-line reveal">
-                <span>Маркіян Шашкевич · 1811–1843</span>
-                <span>СЗШ №34 · since 1886</span>
-                <span>Львів · 2026</span>
+            <h2 class="reveal">Не просто подивився. <span>Пройшов.</span></h2>
+            <p class="reveal">Сайт тепер працює як маленька інтерактивна виставка: історія, гра, перевірка знань і реальні фотографії.</p>
+            <div class="final-score reveal">
+                <b id="finalScore">0</b>
+                <span>твій загальний<br>результат</span>
             </div>
         </div>
     </section>
-
 </main>
 
-<footer class="credits">
-    <div class="wrap credits-grid">
-        <div>
-            Ювілейний інтерактивний спецпроєкт · СЗШ №34 ім. Маркіяна Шашкевича · Львів.
-            Історичні дані: офіційний сайт школи.
-        </div>
-        <div>
-            Фото через Wikimedia Commons:
-            School №34, Lviv — Aeou, CC BY 3.0;
-            Monument of Markiian Shashkevych and bell tower — Wikimedia Commons;
-            Львівська Ратуша — Ryzhkov Oleksandr;
-            титульна сторінка «Русалки Дністрової» — Public Domain;
-            могила Шашкевича — Педагог Світлана, CC BY-SA 4.0.
-        </div>
+<footer>
+    <div class="wrap footer-row">
+        <span>215 × 140 · interactive anniversary project</span>
+        <span>quiz · timeline challenge · archive detective</span>
     </div>
 </footer>
 
 <script>
+    let totalScore=0;
+    const hudScore=document.getElementById('hudScore');
+    const finalScore=document.getElementById('finalScore');
+
+    function addScore(n){
+        totalScore+=n;
+        hudScore.textContent=totalScore;
+        finalScore.textContent=totalScore;
+        hudScore.parentElement.classList.remove('flash');
+        void hudScore.parentElement.offsetWidth;
+        hudScore.parentElement.classList.add('flash');
+    }
+
+    // scroll/progress/parallax
     const progress=document.getElementById('progress');
     const heroPhoto=document.getElementById('heroPhoto');
-
-    function update(){
+    function onScroll(){
         const d=document.documentElement;
         const total=d.scrollHeight-d.clientHeight;
         progress.style.width=(total?d.scrollTop/total*100:0)+'%';
-        const y=Math.min(window.scrollY,700);
-        heroPhoto.style.transform=`scale(1.03) translateY(${y*.08}px)`;
+        heroPhoto.style.transform=`scale(1.03) translateY(${Math.min(scrollY,700)*.07}px)`;
     }
-    window.addEventListener('scroll',update,{passive:true});
-    update();
+    addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
-    const observer=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target);
-            }
-        });
+    // reveal
+    const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}})
     },{threshold:.12});
-    document.querySelectorAll('.reveal').forEach((el,i)=>{
-        el.style.transitionDelay=`${Math.min((i%5)*60,240)}ms`;
-        observer.observe(el);
+    document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=`${Math.min((i%5)*60,240)}ms`;obs.observe(el)});
+
+    // game tabs
+    document.querySelectorAll('.game-tab').forEach(tab=>{
+        tab.onclick=()=>{
+            document.querySelectorAll('.game-tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('game-'+tab.dataset.game).classList.add('active');
+        }
     });
 
-    // drag timeline
-    const timeline=document.getElementById('timelineTrack');
-    document.getElementById('prev').onclick=()=>timeline.scrollBy({left:-350,behavior:'smooth'});
-    document.getElementById('next').onclick=()=>timeline.scrollBy({left:350,behavior:'smooth'});
-    let isDown=false,startX=0,startScroll=0;
-    timeline.addEventListener('pointerdown',e=>{
-        isDown=true;startX=e.clientX;startScroll=timeline.scrollLeft;
-        timeline.setPointerCapture(e.pointerId);timeline.style.cursor='grabbing';
-    });
-    timeline.addEventListener('pointermove',e=>{
-        if(!isDown)return;
-        timeline.scrollLeft=startScroll-(e.clientX-startX);
-    });
-    timeline.addEventListener('pointerup',()=>{isDown=false;timeline.style.cursor='grab'});
-    timeline.addEventListener('pointercancel',()=>{isDown=false;timeline.style.cursor='grab'});
+    // QUIZ
+    const quiz=[
+        {
+            q:'У якому році народився Маркіян Шашкевич?',
+            a:['1811','1837','1886','1928'], correct:0,
+            note:'Маркіян Шашкевич народився 6 листопада 1811 року.'
+        },
+        {
+            q:'З яким літературним об’єднанням найбільше пов’язують Шашкевича?',
+            a:['Молода муза','Руська трійця','Плуг','Ланка'], correct:1,
+            note:'Шашкевич, Іван Вагилевич і Яків Головацький утворили ядро «Руської трійці».'
+        },
+        {
+            q:'Коли вийшла «Русалка Дністровая»?',
+            a:['1811','1832','1837','1848'], correct:2,
+            note:'Альманах було надруковано у 1837 році.'
+        },
+        {
+            q:'У якому році засновано школу ім. Маркіяна Шашкевича?',
+            a:['1875','1886','1901','1928'], correct:1,
+            note:'Школу засновано у 1886 році.'
+        },
+        {
+            q:'З якою адресою сьогодні пов’язана школа №34?',
+            a:['вул. Замкнена, 8','вул. Коперника, 15','пл. Ринок, 1','вул. Личаківська, 10'], correct:0,
+            note:'Школа працює на вул. Замкненій, 8.'
+        }
+    ];
+    let qi=0,quizScore=0,answered=false;
+    const qMeta=document.getElementById('qMeta'),qTitle=document.getElementById('qTitle'),answers=document.getElementById('answers');
+    const feedback=document.getElementById('feedback'),nextQ=document.getElementById('nextQ'),quizBar=document.getElementById('quizBar'),quizScoreEl=document.getElementById('quizScore');
 
-    // school interactive facts
-    document.querySelectorAll('.hotfact').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            document.querySelectorAll('.hotfact').forEach(x=>x.classList.remove('active'));
+    function renderQ(){
+        answered=false;
+        const q=quiz[qi];
+        qMeta.textContent=`question ${qi+1} / ${quiz.length}`;
+        qTitle.textContent=q.q;
+        answers.innerHTML='';
+        q.a.forEach((text,i)=>{
+            const b=document.createElement('button');
+            b.className='answer'; b.textContent=text;
+            b.onclick=()=>answerQ(i,b);
+            answers.appendChild(b);
+        });
+        feedback.textContent='';
+        feedback.className='feedback';
+        nextQ.style.display='none';
+        quizBar.style.width=`${qi/quiz.length*100}%`;
+    }
+    function answerQ(i,btn){
+        if(answered)return;
+        answered=true;
+        const q=quiz[qi];
+        [...answers.children].forEach((b,idx)=>{
+            if(idx===q.correct)b.classList.add('correct');
+        });
+        if(i===q.correct){
+            btn.classList.add('correct'); quizScore+=10; addScore(10);
+            feedback.textContent='Правильно. '+q.note; feedback.className='feedback good';
+        }else{
+            btn.classList.add('wrong');
+            feedback.textContent='Не зовсім. '+q.note; feedback.className='feedback bad';
+        }
+        quizScoreEl.textContent=quizScore;
+        quizBar.style.width=`${(qi+1)/quiz.length*100}%`;
+        nextQ.style.display='inline-block';
+        nextQ.textContent=qi===quiz.length-1?'Завершити квіз':'Наступне питання';
+    }
+    nextQ.onclick=()=>{
+        if(qi<quiz.length-1){qi++;renderQ()}
+        else{
+            qMeta.textContent='quiz complete';
+            qTitle.textContent=`Результат: ${quizScore} / ${quiz.length*10}`;
+            answers.innerHTML='';
+            feedback.textContent=quizScore>=40?'Дуже сильний результат. Можна переходити до хронології.':'Можна пройти ще раз і підняти результат.';
+            feedback.className='feedback good';
+            nextQ.style.display='none';
+        }
+    };
+    renderQ();
+
+    // SORT GAME
+    const sortList=document.getElementById('sortList');
+    let dragged=null,sortAwarded=false;
+    sortList.querySelectorAll('.sort-item').forEach(item=>{
+        item.addEventListener('dragstart',()=>{dragged=item;item.classList.add('dragging')});
+        item.addEventListener('dragend',()=>{item.classList.remove('dragging');dragged=null});
+    });
+    sortList.addEventListener('dragover',e=>{
+        e.preventDefault();
+        const after=[...sortList.querySelectorAll('.sort-item:not(.dragging)')].find(el=>{
+            const r=el.getBoundingClientRect();
+            return e.clientY<r.top+r.height/2;
+        });
+        if(!dragged)return;
+        if(after)sortList.insertBefore(dragged,after); else sortList.appendChild(dragged);
+    });
+    document.getElementById('checkSort').onclick=()=>{
+        const arr=[...sortList.children].map(x=>+x.dataset.order);
+        const ok=arr.every((x,i)=>x===i+1);
+        const res=document.getElementById('sortResult');
+        if(ok){
+            res.textContent='Хронологія відновлена правильно.';
+            res.className='check-result good';
+            if(!sortAwarded){addScore(30);sortAwarded=true}
+        }else{
+            res.textContent='Порядок ще неправильний. Орієнтуйся на роки праворуч.';
+            res.className='check-result bad';
+        }
+    };
+    document.getElementById('shuffleSort').onclick=()=>{
+        [...sortList.children].sort(()=>Math.random()-.5).forEach(x=>sortList.appendChild(x));
+        const res=document.getElementById('sortResult');res.textContent='';res.className='check-result';
+    };
+
+    // DETECTIVE
+    const cases=[
+        {
+            img:'https://upload.wikimedia.org/wikipedia/commons/e/e3/%D0%A0%D1%83%D1%81%D0%B0%D0%BB%D0%BA%D0%B0_%D0%94%D0%BD%D1%A3%D1%81%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_-_tytul_page.jpg',
+            q:'До якого року належить цей артефакт?',
+            opts:['1811','1837','1886'],correct:1,
+            note:'Це титульна сторінка «Русалки Дністрової», виданої 1837 року.'
+        },
+        {
+            img:'https://upload.wikimedia.org/wikipedia/commons/1/1f/School_%E2%84%96_34%2C_Lviv.jpg',
+            q:'Що зображено на фото?',
+            opts:['Будинок «Просвіти»','СЗШ №34 ім. М. Шашкевича','Музей Шашкевича'],correct:1,
+            note:'Це школа №34 у Львові, на вул. Замкненій, 8.'
+        },
+        {
+            img:'https://upload.wikimedia.org/wikipedia/commons/7/72/Monument_of_Markiian_Shashkevych_and_bell_tower.jpg',
+            q:'Кому присвячений цей пам’ятник?',
+            opts:['Івану Франку','Маркіяну Шашкевичу','Тарасу Шевченку'],correct:1,
+            note:'Це пам’ятник Маркіяну Шашкевичу у Львові.'
+        }
+    ];
+    let ci=0,caseAnswered=false,detectiveScore=0;
+    const caseImage=document.getElementById('caseImage'),caseQuestion=document.getElementById('caseQuestion');
+    const caseOptions=document.getElementById('caseOptions'),caseFeedback=document.getElementById('caseFeedback'),caseNext=document.getElementById('caseNext');
+
+    function renderCase(){
+        caseAnswered=false;
+        const c=cases[ci];
+        document.getElementById('caseLabel').textContent=`case 0${ci+1}`;
+        document.getElementById('caseCount').textContent=`${ci+1}/${cases.length}`;
+        caseImage.src=c.img;
+        caseQuestion.textContent=c.q;
+        caseOptions.innerHTML='';
+        c.opts.forEach((t,i)=>{
+            const b=document.createElement('button');b.className='case-option';b.textContent=t;
+            b.onclick=()=>answerCase(i,b);
+            caseOptions.appendChild(b);
+        });
+        caseFeedback.textContent='';
+        caseNext.style.display='none';
+    }
+    function answerCase(i,b){
+        if(caseAnswered)return;
+        caseAnswered=true;
+        const c=cases[ci];
+        [...caseOptions.children].forEach((x,idx)=>{if(idx===c.correct)x.classList.add('correct')});
+        if(i===c.correct){
+            detectiveScore+=15;addScore(15);b.classList.add('correct');
+            caseFeedback.textContent='Правильно. '+c.note;caseFeedback.style.color='var(--good)';
+        }else{
+            b.classList.add('wrong');
+            caseFeedback.textContent='Неправильно. '+c.note;caseFeedback.style.color='var(--bad)';
+        }
+        caseNext.style.display='inline-block';
+        caseNext.textContent=ci===cases.length-1?'Завершити':'Наступна справа';
+    }
+    caseNext.onclick=()=>{
+        if(ci<cases.length-1){ci++;renderCase()}
+        else{
+            caseQuestion.textContent=`Архівний детектив завершено: ${detectiveScore} / ${cases.length*15}`;
+            caseOptions.innerHTML='';
+            caseFeedback.textContent='Усі три справи закрито.';
+            caseFeedback.style.color='var(--good)';
+            caseNext.style.display='none';
+        }
+    };
+    renderCase();
+
+    // horizontal timeline
+    const tl=document.getElementById('timelineTrack');
+    document.getElementById('prev').onclick=()=>tl.scrollBy({left:-350,behavior:'smooth'});
+    document.getElementById('next').onclick=()=>tl.scrollBy({left:350,behavior:'smooth'});
+    let down=false,startX=0,startScroll=0;
+    tl.addEventListener('pointerdown',e=>{down=true;startX=e.clientX;startScroll=tl.scrollLeft;tl.setPointerCapture(e.pointerId);tl.style.cursor='grabbing'});
+    tl.addEventListener('pointermove',e=>{if(down)tl.scrollLeft=startScroll-(e.clientX-startX)});
+    tl.addEventListener('pointerup',()=>{down=false;tl.style.cursor='grab'});
+    tl.addEventListener('pointercancel',()=>{down=false;tl.style.cursor='grab'});
+
+    // school facts
+    document.querySelectorAll('.fact-btn').forEach(btn=>{
+        btn.onclick=()=>{
+            document.querySelectorAll('.fact-btn').forEach(x=>x.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('schoolText').textContent=btn.dataset.text;
-        });
+        }
     });
 
-    // graceful fallback if remote image fails
+    // image fallback
     document.querySelectorAll('img').forEach(img=>{
         img.addEventListener('error',()=>{
-            img.style.display='none';
-            img.parentElement.style.background=
-                'radial-gradient(circle at 20% 20%, rgba(95,124,255,.35), transparent 35%), linear-gradient(145deg,#181d2a,#0b0e15)';
+            img.style.opacity='.12';
+            img.parentElement.style.background='linear-gradient(145deg,#171d2a,#0b0e15)';
         });
     });
 </script>
